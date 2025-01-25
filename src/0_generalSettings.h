@@ -9,10 +9,23 @@
 // Display settings ----------------------------------------------------------------------------------------------
 //#define OLED1306 //An SSD1306 0.96" Display is selected, if defined. Otherwise an SH1106 1.3" display
 //#define ALTERNATIVE_LOGO // Alternative boot logo
+// #define WM_LOGO
+#define LOGO4
+#define SHOW_SMALLER_US   // SHOW_SMALLER_µs
 
 // WiFi settings -------------------------------------------------------------------------------------------------
-const char* ssid = "Servotester_Deluxe";  // SSID
-const char* password = "123456789";       // Password
+// const char* ssid = "Servotester_Deluxe";  // SSID
+// const char* password = "123456789";       // Password
+
+#define SSID_AP                     "Servotester_Deluxe"
+#define PASSWORD_AP                 ""
+const char ip[4] =                  {1,2,3,4};    // default IP address-----------------------------------------------
+const char* ssid = SSID_AP;  // SSID
+const char* password = PASSWORD_AP;       // Password
+
+#define SSID_STA                    ""
+#define PASSWORD_STA                ""
+#define TIMEOUT_CONNECT             25000   //ms
 
 /* Wifi transmission power: less power = longer battery life. Valid options are:
 WIFI_POWER_19_5dBm = 78     // full power

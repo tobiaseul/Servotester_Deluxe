@@ -1,4 +1,20 @@
-# Servotester_Deluxe (with improved software)
+# Servotester_Deluxe (expanded the improved software)
+
+## New in v0.17.0:
+- Added (modified) code for angle sensor from https://www.rc-network.de/threads/ruderwegmessung-mit-esp32-und-servotester-deluxe-diy-projekt.12000029/
+- Added new Menu to display data of cg scale (needs modified cg scale firmware https://github.com/shockyfan/CG_scale)
+- Added option in settings to display manual on startup
+- Implmented Feature in Settings to hide/show menu entries for clearer view
+- Disabled message of Wifi restart after going back from angle/cg scale
+- Fixed encoder is not detecting every movement
+
+## Where does it come from?
+
+forked from his GitHub: https://github.com/TheDIYGuy999/Servotester_Deluxe
+
+Added code for angle sensor from: https://www.rc-network.de/threads/ruderwegmessung-mit-esp32-und-servotester-deluxe-diy-projekt.12000029/
+
+## Servotester_Deluxe (with improved software)
 
 The original autor is "Der RC Modellbauer": https://www.youtube.com/@DerRCModellbauer
 
@@ -46,6 +62,8 @@ Support thread (in German and English): https://www.rc-modellbau-portal.de/index
 - Supply via USB (for small servos) or XT-60 plug
 - 0.96 or 1.3 Inch OLED display
 - Some functions can be controlled via the built in website
+- Display data of angle sensors via ESPNow Protocol
+- Display data of cg scale (modified nightflyer firmware) via ESPNow Protocol
 
 
 ## TODO Software ****************************************

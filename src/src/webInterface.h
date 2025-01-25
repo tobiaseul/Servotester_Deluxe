@@ -7,33 +7,25 @@
 // =======================================================================================================
 //
 
-void webInterface()
-{
+void webInterface() {
+  if (WIFI_ON == 1) {                        // Wifi Ein
+    WiFiClient client = server.available();  // Listen for incoming clients
 
-  if (WIFI_ON == 1)
-  {                                         // Wifi Ein
-    WiFiClient client = server.available(); // Listen for incoming clients
-
-    if (client)
-    { // If a new client connects,
+    if (client) {  // If a new client connects,
       currentTime = millis();
       previousTime = currentTime;
-      Serial.println("New Client."); // print a message out in the serial port
-      String currentLine = "";       // make a String to hold incoming data from the client
-      while (client.connected() && currentTime - previousTime <= timeoutTime)
-      { // loop while the client's connected
+      Serial.println("New Client.");                                             // print a message out in the serial port
+      String currentLine = "";                                                   // make a String to hold incoming data from the client
+      while (client.connected() && currentTime - previousTime <= timeoutTime) {  // loop while the client's connected
         currentTime = millis();
-        if (client.available())
-        {                         // if there's bytes to read from the client,
-          char c = client.read(); // read a byte, then
-          Serial.write(c);        // print it out the serial monitor
+        if (client.available()) {  // if there's bytes to read from the client,
+          char c = client.read();  // read a byte, then
+          Serial.write(c);         // print it out the serial monitor
           header += c;
-          if (c == '\n')
-          { // if the byte is a newline character
+          if (c == '\n') {  // if the byte is a newline character
             // if the current line is blank, you got two newline characters in a row.
             // that's the end of the client HTTP request, so send a response:
-            if (currentLine.length() == 0)
-            {
+            if (currentLine.length() == 0) {
               // HTTP-Header fangen immer mit einem Response-Code an (z.B. HTTP/1.1 200 OK)
               // gefolgt vom Content-Type damit der Client weiss was folgt, gefolgt von einer Leerzeile:
               client.println("HTTP/1.1 200 OK");
@@ -44,170 +36,148 @@ void webInterface()
               // Webseiten Eingaben abfragen
 
               // GET /?value=180& HTTP/1.1
-              if (header.indexOf("GET /?Pos0=") >= 0)
-              {
+              if (header.indexOf("GET /?Pos0=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 servo_pos[0] = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Pos1=") >= 0)
-              {
+              if (header.indexOf("GET /?Pos1=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 servo_pos[1] = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Pos2=") >= 0)
-              {
+              if (header.indexOf("GET /?Pos2=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 servo_pos[2] = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Pos3=") >= 0)
-              {
+              if (header.indexOf("GET /?Pos3=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 servo_pos[3] = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Pos4=") >= 0)
-              {
+              if (header.indexOf("GET /?Pos4=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 servo_pos[4] = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Set1=") >= 0)
-              {
+              if (header.indexOf("GET /?Set1=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 SERVO_STEPS = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Set2=") >= 0)
-              {
+              if (header.indexOf("GET /?Set2=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 SERVO_MAX = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Set3=") >= 0)
-              {
+              if (header.indexOf("GET /?Set3=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 SERVO_MIN = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Set4=") >= 0)
-              {
+              if (header.indexOf("GET /?Set4=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
-                if (valueString.toInt() > SERVO_MIN)
-                { // Nur übernehmen wenn > MIN
+                if (valueString.toInt() > SERVO_MIN) {  // Nur übernehmen wenn > MIN
                   SERVO_CENTER = (valueString.toInt());
                 }
               }
-              if (header.indexOf("GET /?Set5=") >= 0)
-              {
+              if (header.indexOf("GET /?Set5=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 SERVO_Hz = (valueString.toInt());
               }
-              if (header.indexOf("GET /?Speed=") >= 0)
-              {
+              if (header.indexOf("GET /?Speed=") >= 0) {
                 pos1 = header.indexOf('=');
                 pos2 = header.indexOf('&');
                 valueString = header.substring(pos1 + 1, pos2);
                 TimeAuto = (valueString.toInt());
               }
-              if (header.indexOf("GET /mitte1/on") >= 0)
-              {
-                servo_pos[0] = SERVO_CENTER; // Mitte
+              if (header.indexOf("GET /mitte1/on") >= 0) {
+                servo_pos[0] = SERVO_CENTER;  // Mitte
               }
-              if (header.indexOf("GET /mitte2/on") >= 0)
-              {
-                servo_pos[1] = SERVO_CENTER; // Mitte
+              if (header.indexOf("GET /mitte2/on") >= 0) {
+                servo_pos[1] = SERVO_CENTER;  // Mitte
               }
-              if (header.indexOf("GET /mitte3/on") >= 0)
-              {
-                servo_pos[2] = SERVO_CENTER; // Mitte
+              if (header.indexOf("GET /mitte3/on") >= 0) {
+                servo_pos[2] = SERVO_CENTER;  // Mitte
               }
-              if (header.indexOf("GET /mitte4/on") >= 0)
-              {
-                servo_pos[3] = SERVO_CENTER; // Mitte
+              if (header.indexOf("GET /mitte4/on") >= 0) {
+                servo_pos[3] = SERVO_CENTER;  // Mitte
               }
-              if (header.indexOf("GET /mitte5/on") >= 0)
-              {
-                servo_pos[4] = SERVO_CENTER; // Mitte
+              if (header.indexOf("GET /mitte5/on") >= 0) {
+                servo_pos[4] = SERVO_CENTER;  // Mitte
               }
-              if (header.indexOf("GET /back/on") >= 0)
-              {
-                Menu = Servotester_Auswahl;
+              if (header.indexOf("GET /back/on") >= 0) {
+                // Menu = Servotester_Auswahl;
+                Menu = 1;
               }
-              if (header.indexOf("GET /10/on") >= 0)
-              {
-                Menu = Servotester_Menu;
+              if (header.indexOf("GET /10/on") >= 0) {
+                // Menu = Servotester_Menu;
+                Menu = 51;
               }
-              if (header.indexOf("GET /20/on") >= 0)
-              {
-                Menu = Automatik_Modus_Menu;
+              if (header.indexOf("GET /20/on") >= 0) {
+                // Menu = Automatik_Modus_Menu;
+                Menu = 52;
               }
-              if (header.indexOf("GET /30/on") >= 0)
-              {
-                Menu = Impuls_lesen_Menu;
+              if (header.indexOf("GET /30/on") >= 0) {
+                // Menu = Impuls_lesen_Menu;
+                Menu = 56;
               }
-              if (header.indexOf("GET /40/on") >= 0)
-              {
-                Menu = Multiswitch_lesen_Menu;
+              if (header.indexOf("GET /40/on") >= 0) {
+                // Menu = Multiswitch_lesen_Menu;
+                Menu = 57;
               }
-              if (header.indexOf("GET /50/on") >= 0)
-              {
-                Menu = SBUS_lesen_Menu;
+              if (header.indexOf("GET /50/on") >= 0) {
+                // Menu = SBUS_lesen_Menu;
+                Menu = 58;
               }
-              if (header.indexOf("GET /60/on") >= 0)
-              {
-                Menu = IBUS_lesen_Menu;
+              if (header.indexOf("GET /60/on") >= 0) {
+                // Menu = IBUS_lesen_Menu;
+                Menu = 59;
               }
-              if (header.indexOf("GET /70/on") >= 0)
-              {
-                Menu = Oscilloscope_Menu;
+              if (header.indexOf("GET /70/on") >= 0) {
+                // Menu = Oscilloscope_Menu;
+                Menu = 60;
               }
-              if (header.indexOf("GET /80/on") >= 0)
-              {
-                Menu = SignalGenerator_Menu;
+              if (header.indexOf("GET /80/on") >= 0) {
+                // Menu = SignalGenerator_Menu;
+                Menu = 61;
               }
-              if (header.indexOf("GET /90/on") >= 0)
-              {
-                Menu = Rechner_Menu;
+              if (header.indexOf("GET /90/on") >= 0) {
+                // Menu = Rechner_Menu;
+                Menu = 62;
               }
-              if (header.indexOf("GET /100/on") >= 0)
-              {
-                Menu = Pong_Menu;
+              if (header.indexOf("GET /100/on") >= 0) {
+                // Menu = Pong_Menu;
+                Menu = 63;
               }
-              if (header.indexOf("GET /110/on") >= 0)
-              {
-                Menu = Flappy_Birds_Menu;
+              if (header.indexOf("GET /110/on") >= 0) {
+                // Menu = Flappy_Birds_Menu;
+                Menu = 64;
               }
-              if (header.indexOf("GET /120/on") >= 0)
-              {
-                Menu = Einstellung_Menu;
+              if (header.indexOf("GET /120/on") >= 0) {
+                // Menu = Einstellung_Menu;
+                Menu = 65;
               }
-              if (header.indexOf("GET /save/on") >= 0)
-              {
+              if (header.indexOf("GET /save/on") >= 0) {
                 eepromWrite();
               }
-              if (header.indexOf("GET /pause/on") >= 0)
-              {
-                if (Auto_Pause)
-                {
+              if (header.indexOf("GET /pause/on") >= 0) {
+                if (Auto_Pause) {
                   Auto_Pause = false;
-                }
-                else
-                {
+                } else {
                   Auto_Pause = true;
                 }
               }
@@ -231,9 +201,20 @@ void webInterface()
               // Webseiten-Überschrift
               client.println("</head><body><h1>Servotester Deluxe</h1>");
 
-              switch (Menu)
-              {
-              case Servotester_Menu:
+              const MenuEntry *entry = nullptr;
+              for (const auto &menuEntry : menuEntries) {
+                if (menuEntry.auswahlId == Menu || menuEntry.menuId == Menu) {
+                  entry = &menuEntry;
+                  break;
+                }
+              }
+
+              // Wenn kein passender Eintrag gefunden wurde, zurückkehren
+              if (entry == nullptr) {
+                return;
+              }
+
+              if (entry->name == "Servotester" && entry->menuId == Menu) {
                 client.println("<h2>Servotester</h2>");
                 // Servo1
                 valueString = String(servo_pos[0], DEC);
@@ -308,10 +289,7 @@ void webInterface()
                 // Button erstellen und link zum aufrufen erstellen
 
                 client.println("<p><a href=\"/back/on\"><button class=\"button button2\">Menu</button></a></p>");
-
-                break;
-
-              case Automatik_Modus_Menu:
+              } else if (entry->name == "Automatik_Modus" && entry->menuId == Menu) {
                 client.println("<h2>Automatik Modus</h2>");
 
                 valueString = String(TimeAuto, DEC);
@@ -329,9 +307,7 @@ void webInterface()
 
                 client.println("<p><a href=\"/pause/on\"><button class=\"button button1\">Pause</button></a></p>");
                 client.println("<p><a href=\"/back/on\"><button class=\"button button2\">Menu</button></a></p>");
-                break;
-
-              case Einstellung_Menu:
+              } else if (entry->name == "Einstellung" && entry->menuId == Menu) {
                 client.println("<h2>Einstellung</h2>");
 
                 valueString = String(SERVO_STEPS, DEC);
@@ -396,9 +372,7 @@ void webInterface()
 
                 client.println("<p><a href=\"/save/on\"><button class=\"button button1\">Speichern</button></a></p>");
                 client.println("<p><a href=\"/back/on\"><button class=\"button button2\">Menu</button></a></p>");
-                break;
-
-              default:
+              } else {
                 client.println("<h2>Menu</h2>");
                 client.println("<p><a href=\"/10/on\"><button class=\"button button1\">Servotester</button></a></p>");
                 client.println("<p><a href=\"/20/on\"><button class=\"button button1\">Automatik Modus</button></a></p>");
@@ -413,7 +387,7 @@ void webInterface()
                 client.println("<p><a href=\"/110/on\"><button class=\"button button1\">Flappy Birds</button></a></p>");
 
                 client.println("<p><a href=\"/120/on\"><button class=\"button button1\">Einstellung</button></a></p>");
-                break; // Wird nicht benötigt, wenn Statement(s) vorhanden sind
+                // break; // Wird nicht benötigt, wenn Statement(s) vorhanden sind
               }
 
               client.println("</body></html>");
@@ -422,15 +396,11 @@ void webInterface()
               client.println();
               // Break out of the while loop
               break;
-            }
-            else
-            { // if you got a newline, then clear currentLine
+            } else {  // if you got a newline, then clear currentLine
               currentLine = "";
             }
-          }
-          else if (c != '\r')
-          {                   // if you got anything else but a carriage return character,
-            currentLine += c; // add it to the end of the currentLine
+          } else if (c != '\r') {  // if you got anything else but a carriage return character,
+            currentLine += c;      // add it to the end of the currentLine
           }
         }
       }

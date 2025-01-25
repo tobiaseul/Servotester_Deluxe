@@ -1,27 +1,27 @@
 /*
-* Brian R Taylor
-* brian.taylor@bolderflight.com
-* 
-* Copyright (c) 2021 Bolder Flight Systems Inc (modified by TheDIYGuy999)
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the “Software”), to
-* deal in the Software without restriction, including without limitation the
-* rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-* sell copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-* IN THE SOFTWARE.
-*/
+ * Brian R Taylor
+ * brian.taylor@bolderflight.com
+ *
+ * Copyright (c) 2021 Bolder Flight Systems Inc (modified by TheDIYGuy999)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the “Software”), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
 
 #ifndef SRC_SBUS_H_
 #define SRC_SBUS_H_
@@ -31,10 +31,10 @@
 #else
 #include "core/core.h"
 #endif
+#include <array>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
-#include <cmath>
-#include <array>
 
 namespace bfs {
 
@@ -45,7 +45,7 @@ class SbusRx {
   uint32_t BAUD_ = 100000;
   /* Message len */
   static constexpr int8_t BUF_LEN_ = 25;
-  static constexpr uint32_t SBUS_PACKET_TIMEOUT_US = 7000; // 3000 is the minimum working, but causing failsafe in noisy vehicles, so 7000 is recommended
+  static constexpr uint32_t SBUS_PACKET_TIMEOUT_US = 7000;  // 3000 is the minimum working, but causing failsafe in noisy vehicles, so 7000 is recommended
   /* SBUS message defs */
   static constexpr int8_t NUM_SBUS_CH_ = 16;
   static constexpr uint8_t HEADER_ = 0x0F;
@@ -69,15 +69,29 @@ class SbusRx {
   bool parse();
 
  public:
-  explicit SbusRx(HardwareSerial *bus) : uart_(bus) {}
-  void begin(const int8_t rxpin = 16, const int8_t txpin = 17, bool inverted = true, uint32_t baud = 100000); // 16, 17 = UART 2, if not specified
+  explicit SbusRx(HardwareSerial *bus)
+      : uart_(bus) {
+  }
+  void begin(const int8_t rxpin = 16, const int8_t txpin = 17, bool inverted = true, uint32_t baud = 100000);  // 16, 17 = UART 2, if not specified
   bool read();
-  static constexpr int8_t NUM_CH() {return NUM_SBUS_CH_;}
-  inline std::array<int16_t, NUM_SBUS_CH_> ch() const {return ch_;}
-  inline bool failsafe() const {return failsafe_;}
-  inline bool lost_frame() const {return lost_frame_;}
-  inline bool ch17() const {return ch17_;}
-  inline bool ch18() const {return ch18_;}
+  static constexpr int8_t NUM_CH() {
+    return NUM_SBUS_CH_;
+  }
+  inline std::array<int16_t, NUM_SBUS_CH_> ch() const {
+    return ch_;
+  }
+  inline bool failsafe() const {
+    return failsafe_;
+  }
+  inline bool lost_frame() const {
+    return lost_frame_;
+  }
+  inline bool ch17() const {
+    return ch17_;
+  }
+  inline bool ch18() const {
+    return ch18_;
+  }
 };
 
 }  // namespace bfs
