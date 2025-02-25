@@ -3,6 +3,7 @@
   Original by Volos Projects https://www.youtube.com/watch?v=BzjRDpANjaQ
   Modified by TheDIYGuy999
 */
+#pragma once
 
 #include "Arduino.h"
 #include "flappyImages.h"

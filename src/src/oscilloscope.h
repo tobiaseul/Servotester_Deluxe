@@ -2,6 +2,8 @@
   A handy oscilloscope for 0 - 3.3V RC signals
 */
 
+#pragma once
+
 #include "Arduino.h"
 #include "adcLookup.h"
 

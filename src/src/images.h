@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 // der RC Modellbauer Logo
 #define Logo_width 128

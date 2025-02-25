@@ -1,7 +1,4 @@
-#define CHANNEL 1
-#define LED_INTERN 22
-#define LED_INTERN_AN 0
-#define LED_INTERN_AUS 1
+#pragma once
 
 static float EspNowCGLastUpdate = 0;
 static float ESPNowData_CG_U_Lipo;

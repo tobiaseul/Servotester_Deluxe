@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 
 static bool ESPNow_init_done;

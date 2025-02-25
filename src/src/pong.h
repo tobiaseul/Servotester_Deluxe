@@ -4,8 +4,7 @@
   Modified by TheDIYGuy999
 */
 
-#ifndef pong_h
-#define pong_h
+#pragma once
 
 #include "Arduino.h"
 
@@ -222,5 +221,3 @@ void pong(bool paddleUp, bool paddleDown, bool reset, uint8_t paddleSpeed) {
   // Display update ------------------------------------------------------------
   displayUpdate();
 }
-
-#endif

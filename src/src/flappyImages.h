@@ -6,6 +6,8 @@
 // Alternative: https://xbm.jazzychad.net
 //------------------------------------------------------------------------------
 
+#pragma once
+
 // Start screen 128 x 64 pixels --------------------------
 static unsigned char flappyBackground[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42,

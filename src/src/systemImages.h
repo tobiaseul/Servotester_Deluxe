@@ -6,6 +6,8 @@
 // Alternative: https://xbm.jazzychad.net
 //------------------------------------------------------------------------------
 
+#pragma once
+
 // WiFi symbol 9 x 9 pixels  ------------------------------------
 static unsigned char WiFi_symbol[] PROGMEM = {
     0x00, 0xfe, 0x38, 0xfe, 0xee, 0xfe, 0x83, 0xff, 0x38, 0xfe, 0x6c, 0xfe,

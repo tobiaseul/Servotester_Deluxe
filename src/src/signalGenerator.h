@@ -6,6 +6,8 @@
  *  See: https://www.az-delivery.de/en/blogs/azdelivery-blog-fur-arduino-und-raspberry-pi/funktionsgenerator-mit-dem-esp32-teil1
  */
 
+ #pragma once
+
 #include "Arduino.h"
 
 // Bibliotheken zum direkten Zugriff auf Steuerregister des ESP32

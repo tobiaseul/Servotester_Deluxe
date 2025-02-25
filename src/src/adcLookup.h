@@ -1,3 +1,4 @@
+#pragma once
 #include <Arduino.h>
 
 // Lookup table for ADC linearity compensation

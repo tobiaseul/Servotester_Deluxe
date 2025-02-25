@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 #include <map>
 // Language ressources strings for OLED menus

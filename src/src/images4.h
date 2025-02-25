@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 // Tjarks mod Logo https://pro-convert.com/jpg-to-xbm/
 // Inverse colors before

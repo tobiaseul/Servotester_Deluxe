@@ -9,6 +9,8 @@
   - Bigger numbers may not be accurate
   - Use it at your own risk!
 */
+
+#pragma once
 #include <Arduino.h>
 
 int matrixSize = 11;
