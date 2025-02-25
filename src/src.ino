@@ -106,7 +106,7 @@ using namespace std;
 #endif
 
 #include "src/languages.h"  // Menu language ressources
-#include "src/sbus.h"       // For SBUS interface
+#include <sbus.h>       // For SBUS interface
 
 // EEPROM
 #define EEPROM_SIZE 115
@@ -248,8 +248,7 @@ bool playTone = 1;
 #define COMMAND_TX -1  // -1 is just a dummy
 
 // SBUS
-bfs::SbusRx sBus(&Serial2);
-std::array<int16_t, bfs::SbusRx::NUM_CH()> SBUSchannels;
+bfs::SbusRx sBus(&Serial2, COMMAND_RX, COMMAND_TX, SBUS_INVERTED);
 
 // IBUS
 IBusBM IBus;  // IBus object
@@ -1749,32 +1748,32 @@ void MenuUpdate() {
         pinMode(servopin[2], INPUT);
         pinMode(servopin[3], INPUT);
         pinMode(servopin[4], INPUT);
-        sBus.begin(COMMAND_RX, COMMAND_TX, SBUS_INVERTED);  // begin SBUS communication with compatible receivers
+        sBus.Begin();  // begin SBUS communication with compatible receivers
         SetupMenu = true;
       }
 
-      sBus.read();
-      SBUSchannels = sBus.ch();
+      sBus.Read();
+      const auto sBus_data = sBus.data();
 
-      display.drawString(32, 0, String(::map(SBUSchannels[0], 172, 1811, 1000, 2000)));
-      display.drawString(64, 0, String(::map(SBUSchannels[1], 172, 1811, 1000, 2000)));
-      display.drawString(96, 0, String(::map(SBUSchannels[2], 172, 1811, 1000, 2000)));
-      display.drawString(128, 0, String(::map(SBUSchannels[3], 172, 1811, 1000, 2000)));
+      display.drawString(32, 0, String(::map(sBus_data.ch[0], 172, 1811, 1000, 2000)));
+      display.drawString(64, 0, String(::map(sBus_data.ch[1], 172, 1811, 1000, 2000)));
+      display.drawString(96, 0, String(::map(sBus_data.ch[2], 172, 1811, 1000, 2000)));
+      display.drawString(128, 0, String(::map(sBus_data.ch[3], 172, 1811, 1000, 2000)));
 
-      display.drawString(32, 15, String(::map(SBUSchannels[4], 172, 1811, 1000, 2000)));
-      display.drawString(64, 15, String(::map(SBUSchannels[5], 172, 1811, 1000, 2000)));
-      display.drawString(96, 15, String(::map(SBUSchannels[6], 172, 1811, 1000, 2000)));
-      display.drawString(128, 15, String(::map(SBUSchannels[7], 172, 1811, 1000, 2000)));
+      display.drawString(32, 15, String(::map(sBus_data.ch[4], 172, 1811, 1000, 2000)));
+      display.drawString(64, 15, String(::map(sBus_data.ch[5], 172, 1811, 1000, 2000)));
+      display.drawString(96, 15, String(::map(sBus_data.ch[6], 172, 1811, 1000, 2000)));
+      display.drawString(128, 15, String(::map(sBus_data.ch[7], 172, 1811, 1000, 2000)));
 
-      display.drawString(32, 30, String(::map(SBUSchannels[8], 172, 1811, 1000, 2000)));
-      display.drawString(64, 30, String(::map(SBUSchannels[9], 172, 1811, 1000, 2000)));
-      display.drawString(96, 30, String(::map(SBUSchannels[10], 172, 1811, 1000, 2000)));
-      display.drawString(128, 30, String(::map(SBUSchannels[11], 172, 1811, 1000, 2000)));
+      display.drawString(32, 30, String(::map(sBus_data.ch[8], 172, 1811, 1000, 2000)));
+      display.drawString(64, 30, String(::map(sBus_data.ch[9], 172, 1811, 1000, 2000)));
+      display.drawString(96, 30, String(::map(sBus_data.ch[10], 172, 1811, 1000, 2000)));
+      display.drawString(128, 30, String(::map(sBus_data.ch[11], 172, 1811, 1000, 2000)));
 
-      display.drawString(32, 45, String(::map(SBUSchannels[12], 172, 1811, 1000, 2000)));
-      display.drawString(64, 45, String(::map(SBUSchannels[13], 172, 1811, 1000, 2000)));
-      display.drawString(96, 45, String(::map(SBUSchannels[14], 172, 1811, 1000, 2000)));
-      display.drawString(128, 45, String(::map(SBUSchannels[15], 172, 1811, 1000, 2000)));
+      display.drawString(32, 45, String(::map(sBus_data.ch[12], 172, 1811, 1000, 2000)));
+      display.drawString(64, 45, String(::map(sBus_data.ch[13], 172, 1811, 1000, 2000)));
+      display.drawString(96, 45, String(::map(sBus_data.ch[14], 172, 1811, 1000, 2000)));
+      display.drawString(128, 45, String(::map(sBus_data.ch[15], 172, 1811, 1000, 2000)));
       display.display();
     }
 
